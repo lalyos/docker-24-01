@@ -326,3 +326,22 @@ docker run -d \
    -e POSTGRES_PASSWORD=secret \
    postgres
 ```
+
+## Compose
+
+```
+docker compose up
+docker compose up -d
+docker compose up --build -d 
+## this the default in VSCode
+```
+
+tear down keeping persistence
+```
+docker compose down
+```
+
+clear everything including names volumes
+```
+docker compose down -v
+```

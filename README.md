@@ -327,6 +327,20 @@ docker run -d \
    postgres
 ```
 
+## Network
+
+Networks:
+- bridge
+  - default (bridge): DNS is coming host
+  - custom: DNS 127.0.0.11 (DNS provided by docker)
+- host: interfaces "stealed from host"
+- none: 127.0.0.1 only
+- container:c1 interfaces "stealed from c1"
+
+```
+docker network ls
+```
+
 ## Compose
 
 ```

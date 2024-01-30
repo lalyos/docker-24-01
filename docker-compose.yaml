@@ -1,8 +1,18 @@
 services:
   lunch:
+    build: .
     image: lunch:v7
     environment:
-    - TITLE=lunchtime for lalyos
-    - COLOR=lightgreen
+    - TITLE=lunchtime for lalyos [dev]
+    - COLOR=lightblue
     ports:
     - 80
+  coffee:
+    build: .
+    image: lunch:v7
+    environment:
+    - TITLE=Coffe for lalyos [dev]
+    - COLOR=hotpink
+    ports:
+    - 80
+

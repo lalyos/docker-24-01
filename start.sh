@@ -5,6 +5,8 @@ cat > /var/www/html/index.html <<EOF
 <body bgcolor="${COLOR:-gray}">
   <h1>${TITLE:-Welocme}</h1>
   ${BODY:-Please use TITLE/COLOR/BODY env vars}
+  <hr>
+  Copiralyt: 2024.
 </body>
 </html>
 EOF

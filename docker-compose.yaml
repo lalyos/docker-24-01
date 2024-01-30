@@ -1,6 +1,6 @@
 services:
   mydb:
-    image: postgres
+    image: postgres:16.1
     environment:
       - POSTGRES_PASSWORD=secret
     volumes:
@@ -12,20 +12,12 @@ services:
     ports:
       - 8080
 
-  lunch:
-    build: .
-    image: lunch:v7
-    environment:
-    - TITLE=lunchtime for lalyos [dev]
-    - COLOR=lightblue
-    ports:
-    - 80
   coffee:
     build: .
     image: lunch:v7
     environment:
-    - TITLE=Coffe for lalyos [dev]
-    - COLOR=hotpink
+    - TITLE=${TITLE:-Default kompoze}
+    - COLOR=${COLOR:-yellow}
     ports:
     - 80
 

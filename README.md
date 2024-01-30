@@ -201,3 +201,128 @@ docker run -dP \
   -e BODY='...'
   lunch:v7
 ```
+
+## Image from git repo
+
+```
+docker build -t lunch:lalyos https://github.com/lalyos/docker-24-01.git
+```
+
+## Publish image
+
+```
+docker build -t lalyos/lunch:v7 .
+```
+
+When using Github or Google Oauth, you need to create a
+docker hub access token at: https://hub.docker.com/settings/security
+
+It will be yout "password" for `docker login`
+```
+docker login
+docker push lalyos/lunch:v7
+```
+
+
+"It was working on my machine" (tm)
+```
+docker run -dP -e TITLE=public-image lalyos/lunch:v7
+```
+
+## Private registry
+
+```
+docker run -d -p 5000:5000 registry:2
+```
+
+push to local registry
+```
+docker build -t 127.0.0.1:5000/lunch:v7 .
+docker push 127.0.0.1:5000/lunch:v7
+curl 127.1:5000/v2/_catalog
+```
+
+
+## Volume
+
+Named volume
+```
+docker run -it --rm -v data1:/var/data ubuntu
+
+ cd /var/data
+ date > a.txt
+ echo i was here >> a.txt
+ exit
+```
+
+new container
+```
+ls -l /var/data/
+echo second >> /var/data/a.txt
+exit
+```
+
+list volumes
+```
+docker volume ls
+```
+
+## Postgres
+
+```
+docker run -d postgres
+docker logs
+docker run --name mydb -d -e POSTGRES_PASSWORD=secret  postgres
+```
+
+```
+docker exec -it mydb bash
+psql -U postgres
+
+create table vip (name varchar(20), age int, money int);
+insert into vip values('elon', 45, 2000 );
+insert into vip values('lorinc', 65, 200);
+insert into vip values('klara', 55, 20);
+exit
+exit
+```
+
+```
+docker exec -it mydb psql -U postgres -c 'select * from vip'
+
+docker stop mydb
+docker start
+docker exec -it mydb psql -U postgres -c 'select * from vip'
+
+docker rm -f mydb
+## @$!%^@
+```
+
+new container with old data
+```
+ docker run -d \
+   --name mydb \
+   -v 1d14f5da5898ffecdc98f6a76df5de1c28873b16b7b8f82ede14e9894e85771b:/var/lib/postgresql/data \
+   -e POSTGRES_PASSWORD=secret  \
+   postgres
+```
+
+delete all containers and volumes
+```
+docker rm -f mydb
+docker run -d \
+   --name mydb \
+   -v vipdb:/var/lib/postgresql/data \
+   -e POSTGRES_PASSWORD=secret  \
+   postgres
+```
+
+final solution
+```
+docker run -d \
+   --name mydb \
+   -v vipdb:/var/lib/postgresql/data \
+   -v $PWD/sql:/docker-entrypoint-initdb.d \
+   -e POSTGRES_PASSWORD=secret \
+   postgres
+```

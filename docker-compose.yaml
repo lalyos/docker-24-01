@@ -1,4 +1,11 @@
 services:
+  mydb:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - vipdb:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
   lunch:
     build: .
     image: lunch:v7

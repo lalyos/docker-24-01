@@ -1,4 +1,10 @@
 services:
+  proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+    - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
   mydb:
     image: postgres:16.1
     environment:
@@ -9,6 +15,8 @@ services:
   adminer:
     image: adminer
     restart: always
+    environment:
+    - VIRTUAL_HOST=adminer.lvh.me
     ports:
       - 8080
 
@@ -18,6 +26,7 @@ services:
     environment:
     - TITLE=${TITLE:-Default kompoze}
     - COLOR=${COLOR:-yellow}
+    - VIRTUAL_HOST=coffee.lvh.me
     ports:
     - 80
 

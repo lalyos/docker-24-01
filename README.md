@@ -359,3 +359,13 @@ clear everything including names volumes
 ```
 docker compose down -v
 ```
+
+## use env variables
+
+
+replace all hardcoded env in docker-compose.yaml to ${DOMEVAR:-withdefault}
+
+use custom .env file
+```
+docker compose --env-file .env.prod up -d
+```

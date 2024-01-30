@@ -1,0 +1,8 @@
+services:
+  lunch:
+    image: lunch:v7
+    environment:
+    - TITLE=lunchtime for lalyos
+    - COLOR=lightgreen
+    ports:
+    - 80

@@ -12,6 +12,18 @@ services:
     ports:
       - 8080
 
+
+  redis:
+    profiles:
+      - prod
+    build: .
+    image: lunch:v7
+    environment:
+    - TITLE=redis
+    - COLOR=zellow
+    ports:
+    - 80
+
   coffee:
     build: .
     image: lunch:v7

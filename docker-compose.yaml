@@ -1,10 +1,19 @@
 services:
-  proxy:
-    image: nginxproxy/nginx-proxy
+  traefik:
+    image: traefik:1.7-alpine
+    command:
+      - --retry
+      - --rest
+      - --docker.domain=${DOMAIN:-lvh.me}
+      - --api.dashboard
+    labels:
+      - "traefik.frontend.rule=Host:traefik.lvh.me"
+      - "traefik.port=8080"
     ports:
     - 80:80
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
+
   mydb:
     image: postgres:16.1
     environment:
@@ -15,8 +24,6 @@ services:
   adminer:
     image: adminer
     restart: always
-    environment:
-    - VIRTUAL_HOST=adminer.lvh.me
     ports:
       - 8080
 
@@ -26,7 +33,6 @@ services:
     environment:
     - TITLE=${TITLE:-Default kompoze}
     - COLOR=${COLOR:-yellow}
-    - VIRTUAL_HOST=coffee.lvh.me
     ports:
     - 80
 

@@ -30,6 +30,8 @@ services:
     environment:
     - TITLE=${TITLE:-Default kompoze}
     - COLOR=${COLOR:-yellow}
+    labels:
+      - traefik.frontend.auth.basic=admin:$$1$$I5Kt8BwT$$G4y6mBV3xVzyZKUECxqV61
     ports:
     - 80
 
